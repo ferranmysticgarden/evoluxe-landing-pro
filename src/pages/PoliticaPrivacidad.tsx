@@ -25,7 +25,9 @@ const PoliticaPrivacidad = () => {
             </p>
             <p className="mt-4">
               <strong>Responsable del tratamiento:</strong> Evoluxe's Project<br />
-              <strong>Contacto:</strong> contact@evoluxe.com
+              <strong>Dirección:</strong> Gerani 31, 17240 Llagostera, España<br />
+              <strong>Teléfono:</strong> +34 609 955 494<br />
+              <strong>Correo electrónico:</strong> evoluxesproject@gmail.com
             </p>
           </section>
 
@@ -119,7 +121,7 @@ const PoliticaPrivacidad = () => {
               <li><strong>No ser objeto de decisiones automatizadas</strong></li>
             </ul>
             <p className="mt-4">
-              Para ejercer estos derechos, puede contactarnos en: contact@evoluxe.com
+              Para ejercer estos derechos, puede contactarnos en: evoluxesproject@gmail.com o llamando al +34 609 955 494
             </p>
           </section>
 
@@ -204,7 +206,9 @@ const PoliticaPrivacidad = () => {
               personales, puede contactarnos en:
             </p>
             <ul className="list-disc pl-6 space-y-2">
-              <li><strong>Correo electrónico:</strong> contact@evoluxe.com</li>
+              <li><strong>Correo electrónico:</strong> evoluxesproject@gmail.com</li>
+              <li><strong>Teléfono:</strong> +34 609 955 494</li>
+              <li><strong>Dirección postal:</strong> Gerani 31, 17240 Llagostera, España</li>
               <li><strong>Asunto:</strong> "Protección de Datos - [Su consulta]"</li>
             </ul>
           </section>

@@ -270,7 +270,9 @@ const TerminosUso = () => {
               Para cualquier consulta sobre estos Términos de Uso, puede contactarnos en:
             </p>
             <ul className="list-disc pl-6 space-y-2">
-              <li><strong>Correo electrónico:</strong> contact@evoluxe.com</li>
+              <li><strong>Correo electrónico:</strong> evoluxesproject@gmail.com</li>
+              <li><strong>Teléfono:</strong> +34 609 955 494</li>
+              <li><strong>Dirección:</strong> Gerani 31, 17240 Llagostera, España</li>
               <li><strong>Asunto:</strong> "Términos de Uso - [Su consulta]"</li>
             </ul>
           </section>
