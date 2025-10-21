@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import { BarChart3 } from "lucide-react";
 
 const Footer = () => {
@@ -8,10 +7,10 @@ const Footer = () => {
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
           {/* Brand */}
           <div>
-            <Link to="/" className="flex items-center gap-2 mb-4">
+            <a href="/" className="flex items-center gap-2 mb-4">
               <BarChart3 className="h-6 w-6 text-primary" />
               <span className="text-xl font-bold text-foreground">Evoluxe's Project</span>
-            </Link>
+            </a>
             <p className="text-sm text-muted-foreground mb-4">
               La herramienta SEO profesional más completa para dominar los rankings de búsqueda.
             </p>
@@ -74,19 +73,19 @@ const Footer = () => {
             <h3 className="font-semibold text-foreground mb-4">Legal</h3>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link to="/aviso-legal" className="text-muted-foreground hover:text-primary transition-colors">
+                <a href="/aviso-legal" className="text-muted-foreground hover:text-primary transition-colors">
                   Aviso Legal
-                </Link>
+                </a>
               </li>
               <li>
-                <Link to="/politica-privacidad" className="text-muted-foreground hover:text-primary transition-colors">
+                <a href="/politica-privacidad" className="text-muted-foreground hover:text-primary transition-colors">
                   Política de Privacidad
-                </Link>
+                </a>
               </li>
               <li>
-                <Link to="/terminos-uso" className="text-muted-foreground hover:text-primary transition-colors">
+                <a href="/terminos-uso" className="text-muted-foreground hover:text-primary transition-colors">
                   Términos de Uso
-                </Link>
+                </a>
               </li>
               <li>
                 <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
