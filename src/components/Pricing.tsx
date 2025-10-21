@@ -6,58 +6,60 @@ import { useToast } from "@/hooks/use-toast";
 const plans = [
   {
     name: "Starter",
-    price: "49",
+    price: "29",
     period: "mes",
     description: "Perfecto para freelancers y pequeños proyectos",
     features: [
-      "10 proyectos activos",
+      "5 proyectos activos",
       "100 keywords monitorizadas",
-      "5 competidores por proyecto",
-      "Auditoría técnica básica",
-      "Análisis de backlinks",
-      "Reportes mensuales",
-      "Soporte por email"
+      "3 competidores por proyecto",
+      "Análisis automático de palabras clave",
+      "Seguimiento de rankings diario",
+      "Análisis básico de backlinks",
+      "Reportes automatizados mensuales",
+      "Dashboard intuitivo"
     ],
     cta: "Empezar Ahora",
     popular: false
   },
   {
     name: "Professional",
-    price: "149",
+    price: "79",
     period: "mes",
-    description: "Ideal para agencias y empresas en crecimiento",
+    description: "Ideal para profesionales y pequeñas agencias",
     features: [
-      "50 proyectos activos",
-      "1000 keywords monitorizadas",
-      "15 competidores por proyecto",
-      "Auditoría técnica avanzada",
+      "25 proyectos activos",
+      "500 keywords monitorizadas",
+      "10 competidores por proyecto",
+      "Análisis avanzado SEO on-page",
+      "Seguimiento de rankings en tiempo real",
       "Análisis completo de backlinks",
-      "Seguimiento de rankings 24/7",
-      "Reportes personalizados white-label",
-      "API acceso completo",
-      "Soporte prioritario"
+      "Monitorización de cambios de algoritmo",
+      "Reportes personalizables automáticos",
+      "Exportación de datos (CSV/PDF)",
+      "Alertas por email"
     ],
     cta: "Probar Gratis 14 Días",
     popular: true
   },
   {
     name: "Enterprise",
-    price: "399",
+    price: "199",
     period: "mes",
-    description: "Para grandes empresas con necesidades avanzadas",
+    description: "Para agencias y empresas con múltiples proyectos",
     features: [
       "Proyectos ilimitados",
-      "10,000+ keywords monitorizadas",
+      "2,000 keywords monitorizadas",
       "Competidores ilimitados",
-      "Auditoría técnica enterprise",
-      "Análisis histórico de backlinks",
-      "Alertas en tiempo real",
-      "Dashboards personalizados",
-      "Integraciones avanzadas",
-      "Account manager dedicado",
-      "Soporte 24/7"
+      "Análisis histórico completo",
+      "Seguimiento multi-idioma y multi-país",
+      "API para integraciones",
+      "Reportes white-label automatizados",
+      "Análisis de tendencias y predicciones",
+      "Prioridad en nuevas funcionalidades",
+      "Datos sin límite de retención"
     ],
-    cta: "Contactar Ventas",
+    cta: "Empezar Ahora",
     popular: false
   }
 ];
