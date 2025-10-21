@@ -24,23 +24,23 @@ const Footer = () => {
             <h3 className="font-semibold text-foreground mb-4">Producto</h3>
             <ul className="space-y-2 text-sm">
               <li>
-                <a href="#features" className="text-muted-foreground hover:text-primary transition-colors">
+                <a href="/#features" className="text-muted-foreground hover:text-primary transition-colors">
                   Funcionalidades
                 </a>
               </li>
               <li>
-                <a href="#pricing" className="text-muted-foreground hover:text-primary transition-colors">
+                <a href="/#pricing" className="text-muted-foreground hover:text-primary transition-colors">
                   Precios
                 </a>
               </li>
               <li>
-                <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
-                  API
+                <a href="/#testimonials" className="text-muted-foreground hover:text-primary transition-colors">
+                  Testimonios
                 </a>
               </li>
               <li>
-                <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
-                  Integraciones
+                <a href="/#faq" className="text-muted-foreground hover:text-primary transition-colors">
+                  FAQ
                 </a>
               </li>
             </ul>
@@ -51,17 +51,17 @@ const Footer = () => {
             <h3 className="font-semibold text-foreground mb-4">Empresa</h3>
             <ul className="space-y-2 text-sm">
               <li>
-                <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
-                  Sobre Nosotros
+                <a href="/casos-exito" className="text-muted-foreground hover:text-primary transition-colors">
+                  Casos de Éxito
                 </a>
               </li>
               <li>
-                <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
+                <a href="/blog" className="text-muted-foreground hover:text-primary transition-colors">
                   Blog
                 </a>
               </li>
               <li>
-                <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
+                <a href="mailto:evoluxesproject@gmail.com" className="text-muted-foreground hover:text-primary transition-colors">
                   Contacto
                 </a>
               </li>
@@ -88,7 +88,7 @@ const Footer = () => {
                 </a>
               </li>
               <li>
-                <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
+                <a href="/politica-cookies" className="text-muted-foreground hover:text-primary transition-colors">
                   Política de Cookies
                 </a>
               </li>
@@ -98,7 +98,7 @@ const Footer = () => {
 
         <div className="mt-12 pt-8 border-t border-border text-center text-sm text-muted-foreground">
           <p>
-            Contacto: <a href="mailto:contact@evoluxe.com" className="text-primary hover:underline">contact@evoluxe.com</a>
+            Contacto: <a href="mailto:evoluxesproject@gmail.com" className="text-primary hover:underline">evoluxesproject@gmail.com</a> | Tel: <a href="tel:+34609955494" className="text-primary hover:underline">+34 609 955 494</a>
           </p>
         </div>
       </div>

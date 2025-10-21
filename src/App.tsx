@@ -9,6 +9,7 @@ import Index from "./pages/Index";
 import Auth from "./pages/Auth";
 import AvisoLegal from "./pages/AvisoLegal";
 import PoliticaPrivacidad from "./pages/PoliticaPrivacidad";
+import PoliticaCookies from "./pages/PoliticaCookies";
 import TerminosUso from "./pages/TerminosUso";
 import Blog from "./pages/Blog";
 import CasosExito from "./pages/CasosExito";
@@ -28,6 +29,7 @@ const App = () => (
             <Route path="/auth" element={<Auth />} />
             <Route path="/aviso-legal" element={<AvisoLegal />} />
             <Route path="/politica-privacidad" element={<PoliticaPrivacidad />} />
+            <Route path="/politica-cookies" element={<PoliticaCookies />} />
             <Route path="/terminos-uso" element={<TerminosUso />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/casos-exito" element={<CasosExito />} />
