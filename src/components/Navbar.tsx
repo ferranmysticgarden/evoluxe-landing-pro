@@ -1,10 +1,18 @@
 import { Button } from "@/components/ui/button";
-import { BarChart3, Menu } from "lucide-react";
+import { BarChart3, Menu, User, LogOut } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { useAuth } from "@/contexts/AuthContext";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { user, signOut } = useAuth();
 
   return (
     <nav className="sticky top-0 z-50 bg-background/80 backdrop-blur-lg border-b border-border">
@@ -34,12 +42,35 @@ const Navbar = () => {
 
           {/* CTA Buttons */}
           <div className="hidden md:flex items-center gap-4">
-            <Button variant="ghost" size="sm">
-              Iniciar Sesión
-            </Button>
-            <Button size="sm">
-              Probar Gratis
-            </Button>
+            {user ? (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" size="sm" className="gap-2">
+                    <User className="h-4 w-4" />
+                    {user.email}
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  <DropdownMenuItem onClick={signOut} className="gap-2 cursor-pointer">
+                    <LogOut className="h-4 w-4" />
+                    Cerrar Sesión
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              <>
+                <Link to="/auth">
+                  <Button variant="ghost" size="sm">
+                    Iniciar Sesión
+                  </Button>
+                </Link>
+                <Link to="/auth">
+                  <Button size="sm">
+                    Probar Gratis
+                  </Button>
+                </Link>
+              </>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -68,12 +99,30 @@ const Navbar = () => {
               Blog
             </Link>
             <div className="flex flex-col gap-2 pt-4">
-              <Button variant="ghost" size="sm" className="w-full">
-                Iniciar Sesión
-              </Button>
-              <Button size="sm" className="w-full">
-                Probar Gratis
-              </Button>
+              {user ? (
+                <>
+                  <div className="text-sm text-muted-foreground px-2 py-1">
+                    {user.email}
+                  </div>
+                  <Button variant="ghost" size="sm" className="w-full gap-2" onClick={signOut}>
+                    <LogOut className="h-4 w-4" />
+                    Cerrar Sesión
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <Link to="/auth">
+                    <Button variant="ghost" size="sm" className="w-full">
+                      Iniciar Sesión
+                    </Button>
+                  </Link>
+                  <Link to="/auth">
+                    <Button size="sm" className="w-full">
+                      Probar Gratis
+                    </Button>
+                  </Link>
+                </>
+              )}
             </div>
           </div>
         )}
