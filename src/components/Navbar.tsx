@@ -1,7 +1,7 @@
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { BarChart3, Menu, User, LogOut } from "lucide-react";
 import { Link } from "react-router-dom";
-import { useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import {
   DropdownMenu,
