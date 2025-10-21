@@ -24,12 +24,12 @@ const Navbar = () => {
             <a href="#pricing" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
               Precios
             </a>
-            <a href="#" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
+            <Link to="/casos-exito" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
               Casos de Éxito
-            </a>
-            <a href="#" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
+            </Link>
+            <Link to="/blog" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
               Blog
-            </a>
+            </Link>
           </div>
 
           {/* CTA Buttons */}
@@ -61,12 +61,12 @@ const Navbar = () => {
             <a href="#pricing" className="block text-sm font-medium text-muted-foreground hover:text-foreground">
               Precios
             </a>
-            <a href="#" className="block text-sm font-medium text-muted-foreground hover:text-foreground">
+            <Link to="/casos-exito" className="block text-sm font-medium text-muted-foreground hover:text-foreground">
               Casos de Éxito
-            </a>
-            <a href="#" className="block text-sm font-medium text-muted-foreground hover:text-foreground">
+            </Link>
+            <Link to="/blog" className="block text-sm font-medium text-muted-foreground hover:text-foreground">
               Blog
-            </a>
+            </Link>
             <div className="flex flex-col gap-2 pt-4">
               <Button variant="ghost" size="sm" className="w-full">
                 Iniciar Sesión
