@@ -150,7 +150,7 @@ const PoliticaCookies = () => {
               Para cualquier consulta sobre esta Política de Cookies, puede contactarnos a través de:
             </p>
             <ul className="list-disc pl-6 space-y-2 mt-4">
-              <li><strong>Correo electrónico:</strong> evoluxesproject@gmail.com</li>
+              <li><strong>Correo electrónico:</strong> fcanamases@gmail.com</li>
               <li><strong>Teléfono:</strong> +34 609 955 494</li>
               <li><strong>Dirección:</strong> Gerani 31, 17240 Llagostera, España</li>
             </ul>

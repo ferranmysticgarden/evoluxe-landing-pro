@@ -27,7 +27,7 @@ const AvisoLegal = () => {
               <li><strong>Denominación social:</strong> Evoluxe's Project</li>
               <li><strong>Dirección:</strong> Gerani 31, 17240 Llagostera, España</li>
               <li><strong>Teléfono:</strong> +34 609 955 494</li>
-              <li><strong>Correo electrónico:</strong> evoluxesproject@gmail.com</li>
+              <li><strong>Correo electrónico:</strong> fcanamases@gmail.com</li>
               <li><strong>Sitio web:</strong> www.evoluxeproject.com</li>
             </ul>
           </section>
@@ -124,7 +124,7 @@ const AvisoLegal = () => {
               contactar con nosotros a través de:
             </p>
             <ul className="list-disc pl-6 space-y-2">
-              <li><strong>Correo electrónico:</strong> evoluxesproject@gmail.com</li>
+              <li><strong>Correo electrónico:</strong> fcanamases@gmail.com</li>
               <li><strong>Teléfono:</strong> +34 609 955 494</li>
               <li><strong>Dirección:</strong> Gerani 31, 17240 Llagostera, España</li>
             </ul>

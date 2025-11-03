@@ -42,7 +42,7 @@ const faqs = [
 
 const FAQ = () => {
   return (
-    <section className="py-24 bg-background">
+    <section id="faq" className="py-24 bg-background">
       <div className="container mx-auto px-4">
         <div className="mx-auto max-w-3xl text-center mb-16">
           <h2 className="text-4xl font-bold mb-4 text-foreground md:text-5xl">
@@ -77,7 +77,7 @@ const FAQ = () => {
             ¿Tienes más preguntas?
           </p>
           <a 
-            href="mailto:support@evoluxe.com" 
+            href="mailto:fcanamases@gmail.com" 
             className="text-primary hover:underline font-medium"
           >
             Contacta con nuestro equipo

@@ -61,7 +61,7 @@ const Footer = () => {
                 </a>
               </li>
               <li>
-                <a href="mailto:evoluxesproject@gmail.com" className="text-muted-foreground hover:text-primary transition-colors">
+                <a href="mailto:fcanamases@gmail.com" className="text-muted-foreground hover:text-primary transition-colors">
                   Contacto
                 </a>
               </li>
@@ -98,7 +98,7 @@ const Footer = () => {
 
         <div className="mt-12 pt-8 border-t border-border text-center text-sm text-muted-foreground">
           <p>
-            Contacto: <a href="mailto:evoluxesproject@gmail.com" className="text-primary hover:underline">evoluxesproject@gmail.com</a> | Tel: <a href="tel:+34609955494" className="text-primary hover:underline">+34 609 955 494</a>
+            Contacto: <a href="mailto:fcanamases@gmail.com" className="text-primary hover:underline">fcanamases@gmail.com</a> | Tel: <a href="tel:+34609955494" className="text-primary hover:underline">+34 609 955 494</a>
           </p>
         </div>
       </div>
