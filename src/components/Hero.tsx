@@ -10,8 +10,8 @@ const Hero = () => {
   };
 
   const handleViewDemo = () => {
-    const pricingSection = document.getElementById("pricing");
-    pricingSection?.scrollIntoView({ behavior: "smooth" });
+    const featuresSection = document.getElementById("features");
+    featuresSection?.scrollIntoView({ behavior: "smooth" });
   };
   return (
     <section className="relative overflow-hidden bg-gradient-to-b from-primary/5 via-background to-background pt-20 pb-32">
@@ -53,7 +53,7 @@ const Hero = () => {
               className="h-14 px-8 text-base"
               onClick={handleViewDemo}
             >
-              Ver Demo en Vivo
+              Ver Funcionalidades
             </Button>
           </div>
 

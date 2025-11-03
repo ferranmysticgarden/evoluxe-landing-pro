@@ -85,6 +85,16 @@ const Pricing = () => {
   const navigate = useNavigate();
   const [loadingPlan, setLoadingPlan] = useState<string | null>(null);
 
+  // Scroll suave a la sección cuando se carga con hash
+  React.useEffect(() => {
+    if (window.location.hash === '#pricing') {
+      setTimeout(() => {
+        const element = document.getElementById('pricing');
+        element?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 100);
+    }
+  }, []);
+
   const handlePurchase = async (planName: string, priceId: string) => {
     if (!user || !session) {
       toast({
@@ -163,6 +173,13 @@ const Pricing = () => {
           <p className="text-lg text-muted-foreground">
             Elige el plan perfecto para tus necesidades SEO. Sin compromisos, cancela cuando quieras.
           </p>
+          {user && !subscriptionData?.subscribed && (
+            <div className="mt-6 p-4 bg-primary/10 rounded-lg border border-primary/20">
+              <p className="text-sm font-medium text-primary">
+                ✨ ¡Tu cuenta está lista! Elige un plan para comenzar tu prueba gratis de 14 días
+              </p>
+            </div>
+          )}
           {subscriptionData?.subscribed && (
             <div className="mt-4">
               <Button variant="outline" onClick={handleManageSubscription}>

@@ -109,13 +109,18 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         title: "Error al iniciar sesión",
         description: error.message,
       });
+    } else {
+      toast({
+        title: "¡Bienvenido de nuevo!",
+        description: "Has iniciado sesión correctamente.",
+      });
     }
     
     return { error };
   };
 
   const signUp = async (email: string, password: string, fullName: string) => {
-    const redirectUrl = `${window.location.origin}/`;
+    const redirectUrl = `${window.location.origin}/#pricing`;
     
     const { error } = await supabase.auth.signUp({
       email,
@@ -136,8 +141,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       });
     } else {
       toast({
-        title: "¡Registro exitoso!",
-        description: "Tu cuenta ha sido creada. Ya puedes iniciar sesión.",
+        title: "¡Cuenta creada exitosamente!",
+        description: "Ahora puedes elegir tu plan y comenzar tu prueba gratis de 14 días.",
+        duration: 5000,
       });
     }
     

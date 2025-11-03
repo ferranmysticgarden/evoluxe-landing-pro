@@ -19,7 +19,7 @@ const Auth = () => {
 
   useEffect(() => {
     if (user) {
-      navigate("/");
+      navigate("/#pricing");
     }
   }, [user, navigate]);
 
@@ -29,7 +29,7 @@ const Auth = () => {
     const { error } = await signIn(email, password);
     setIsLoading(false);
     if (!error) {
-      navigate("/");
+      navigate("/#pricing");
     }
   };
 
@@ -39,9 +39,7 @@ const Auth = () => {
     const { error } = await signUp(email, password, fullName);
     setIsLoading(false);
     if (!error) {
-      setEmail("");
-      setPassword("");
-      setFullName("");
+      navigate("/#pricing");
     }
   };
 
@@ -55,46 +53,17 @@ const Auth = () => {
 
         <Card>
           <CardHeader>
-            <CardTitle>Bienvenido</CardTitle>
+            <CardTitle>Comienza tu Prueba Gratis</CardTitle>
             <CardDescription>
-              Inicia sesión o crea una cuenta para continuar
+              Crea tu cuenta y prueba todas las funcionalidades durante 14 días sin compromiso
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <Tabs defaultValue="signin">
+            <Tabs defaultValue="signup">
               <TabsList className="grid w-full grid-cols-2">
-                <TabsTrigger value="signin">Iniciar Sesión</TabsTrigger>
                 <TabsTrigger value="signup">Registrarse</TabsTrigger>
+                <TabsTrigger value="signin">Iniciar Sesión</TabsTrigger>
               </TabsList>
-              
-              <TabsContent value="signin">
-                <form onSubmit={handleSignIn} className="space-y-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="signin-email">Email</Label>
-                    <Input
-                      id="signin-email"
-                      type="email"
-                      placeholder="tu@email.com"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      required
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="signin-password">Contraseña</Label>
-                    <Input
-                      id="signin-password"
-                      type="password"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      required
-                    />
-                  </div>
-                  <Button type="submit" className="w-full" disabled={isLoading}>
-                    {isLoading ? "Cargando..." : "Iniciar Sesión"}
-                  </Button>
-                </form>
-              </TabsContent>
               
               <TabsContent value="signup">
                 <form onSubmit={handleSignUp} className="space-y-4">
@@ -132,7 +101,39 @@ const Auth = () => {
                     />
                   </div>
                   <Button type="submit" className="w-full" disabled={isLoading}>
-                    {isLoading ? "Cargando..." : "Crear Cuenta"}
+                    {isLoading ? "Creando cuenta..." : "Comenzar Prueba Gratis"}
+                  </Button>
+                  <p className="text-xs text-center text-muted-foreground">
+                    Al registrarte, aceptas nuestros <Link to="/terminos-uso" className="text-primary hover:underline">Términos de Uso</Link> y <Link to="/politica-privacidad" className="text-primary hover:underline">Política de Privacidad</Link>
+                  </p>
+                </form>
+              </TabsContent>
+              
+              <TabsContent value="signin">
+                <form onSubmit={handleSignIn} className="space-y-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="signin-email">Email</Label>
+                    <Input
+                      id="signin-email"
+                      type="email"
+                      placeholder="tu@email.com"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      required
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="signin-password">Contraseña</Label>
+                    <Input
+                      id="signin-password"
+                      type="password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      required
+                    />
+                  </div>
+                  <Button type="submit" className="w-full" disabled={isLoading}>
+                    {isLoading ? "Iniciando..." : "Iniciar Sesión"}
                   </Button>
                 </form>
               </TabsContent>
