@@ -1,7 +1,18 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, BarChart3, TrendingUp, Shield } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const Hero = () => {
+  const navigate = useNavigate();
+
+  const handleStartTrial = () => {
+    navigate("/auth");
+  };
+
+  const handleViewDemo = () => {
+    const pricingSection = document.getElementById("pricing");
+    pricingSection?.scrollIntoView({ behavior: "smooth" });
+  };
   return (
     <section className="relative overflow-hidden bg-gradient-to-b from-primary/5 via-background to-background pt-20 pb-32">
       <div className="container mx-auto px-4">
@@ -31,6 +42,7 @@ const Hero = () => {
             <Button 
               size="lg" 
               className="group h-14 gap-2 px-8 text-base shadow-lg transition-all hover:shadow-xl"
+              onClick={handleStartTrial}
             >
               Probar Gratis 14 Días
               <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
@@ -39,6 +51,7 @@ const Hero = () => {
               variant="outline" 
               size="lg"
               className="h-14 px-8 text-base"
+              onClick={handleViewDemo}
             >
               Ver Demo en Vivo
             </Button>
