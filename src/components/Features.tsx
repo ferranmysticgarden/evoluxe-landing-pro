@@ -61,7 +61,7 @@ const features = [
 
 const Features = () => {
   return (
-    <section className="py-24 bg-gradient-to-b from-background to-muted/20">
+    <section id="features" className="py-24 bg-gradient-to-b from-background to-muted/20">
       <div className="container mx-auto px-4">
         <div className="mx-auto max-w-3xl text-center mb-16">
           <h2 className="text-4xl font-bold mb-4 text-foreground md:text-5xl">
