@@ -38,6 +38,158 @@ export type Database = {
         }
         Relationships: []
       }
+      projects: {
+        Row: {
+          created_at: string
+          id: string
+          last_analyzed_at: string | null
+          name: string
+          status: string | null
+          updated_at: string
+          url: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          last_analyzed_at?: string | null
+          name: string
+          status?: string | null
+          updated_at?: string
+          url: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          last_analyzed_at?: string | null
+          name?: string
+          status?: string | null
+          updated_at?: string
+          url?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      seo_analyses: {
+        Row: {
+          analyzed_at: string
+          canonical_url: string | null
+          critical_issues: string[] | null
+          external_links: number | null
+          h1_count: number | null
+          h1_tags: string[] | null
+          h2_count: number | null
+          has_schema_markup: boolean | null
+          has_viewport_meta: boolean | null
+          id: string
+          images_total: number | null
+          images_with_alt: number | null
+          images_without_alt: number | null
+          internal_links: number | null
+          is_https: boolean | null
+          meta_description: string | null
+          meta_description_length: number | null
+          mobile_friendly: boolean | null
+          og_description: string | null
+          og_image: string | null
+          og_title: string | null
+          overall_score: number
+          page_load_time: number | null
+          page_size_kb: number | null
+          project_id: string
+          raw_html: string | null
+          recommendations: string[] | null
+          robots_meta: string | null
+          schema_types: string[] | null
+          title: string | null
+          title_length: number | null
+          twitter_card: string | null
+          warnings: string[] | null
+          word_count: number | null
+        }
+        Insert: {
+          analyzed_at?: string
+          canonical_url?: string | null
+          critical_issues?: string[] | null
+          external_links?: number | null
+          h1_count?: number | null
+          h1_tags?: string[] | null
+          h2_count?: number | null
+          has_schema_markup?: boolean | null
+          has_viewport_meta?: boolean | null
+          id?: string
+          images_total?: number | null
+          images_with_alt?: number | null
+          images_without_alt?: number | null
+          internal_links?: number | null
+          is_https?: boolean | null
+          meta_description?: string | null
+          meta_description_length?: number | null
+          mobile_friendly?: boolean | null
+          og_description?: string | null
+          og_image?: string | null
+          og_title?: string | null
+          overall_score: number
+          page_load_time?: number | null
+          page_size_kb?: number | null
+          project_id: string
+          raw_html?: string | null
+          recommendations?: string[] | null
+          robots_meta?: string | null
+          schema_types?: string[] | null
+          title?: string | null
+          title_length?: number | null
+          twitter_card?: string | null
+          warnings?: string[] | null
+          word_count?: number | null
+        }
+        Update: {
+          analyzed_at?: string
+          canonical_url?: string | null
+          critical_issues?: string[] | null
+          external_links?: number | null
+          h1_count?: number | null
+          h1_tags?: string[] | null
+          h2_count?: number | null
+          has_schema_markup?: boolean | null
+          has_viewport_meta?: boolean | null
+          id?: string
+          images_total?: number | null
+          images_with_alt?: number | null
+          images_without_alt?: number | null
+          internal_links?: number | null
+          is_https?: boolean | null
+          meta_description?: string | null
+          meta_description_length?: number | null
+          mobile_friendly?: boolean | null
+          og_description?: string | null
+          og_image?: string | null
+          og_title?: string | null
+          overall_score?: number
+          page_load_time?: number | null
+          page_size_kb?: number | null
+          project_id?: string
+          raw_html?: string | null
+          recommendations?: string[] | null
+          robots_meta?: string | null
+          schema_types?: string[] | null
+          title?: string | null
+          title_length?: number | null
+          twitter_card?: string | null
+          warnings?: string[] | null
+          word_count?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "seo_analyses_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never

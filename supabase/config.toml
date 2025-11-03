@@ -3,6 +3,9 @@ project_id = "dpegesjkzisjphyfanev"
 [functions.analyze-seo]
 verify_jwt = false
 
+[functions.analyze-project]
+verify_jwt = true
+
 [functions.check-subscription]
 verify_jwt = true
 

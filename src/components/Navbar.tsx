@@ -43,20 +43,27 @@ const Navbar = () => {
           {/* CTA Buttons */}
           <div className="hidden md:flex items-center gap-4">
             {user ? (
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
+              <>
+                <Link to="/dashboard">
                   <Button variant="ghost" size="sm" className="gap-2">
                     <User className="h-4 w-4" />
-                    {user.email}
+                    Dashboard
                   </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end">
-                  <DropdownMenuItem onClick={signOut} className="gap-2 cursor-pointer">
-                    <LogOut className="h-4 w-4" />
-                    Cerrar Sesión
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
+                </Link>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" size="sm" className="gap-2">
+                      {user.email}
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end">
+                    <DropdownMenuItem onClick={signOut} className="gap-2 cursor-pointer">
+                      <LogOut className="h-4 w-4" />
+                      Cerrar Sesión
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </>
             ) : (
               <>
                 <Link to="/auth">
@@ -101,6 +108,12 @@ const Navbar = () => {
             <div className="flex flex-col gap-2 pt-4">
               {user ? (
                 <>
+                  <Link to="/dashboard">
+                    <Button variant="ghost" size="sm" className="w-full gap-2">
+                      <User className="h-4 w-4" />
+                      Dashboard
+                    </Button>
+                  </Link>
                   <div className="text-sm text-muted-foreground px-2 py-1">
                     {user.email}
                   </div>
