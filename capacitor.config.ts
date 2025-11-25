@@ -4,7 +4,9 @@ const config: CapacitorConfig = {
   appId: 'app.lovable.2b458dd0a7554119b873100189321f21',
   appName: 'Evoluxe SEO',
   webDir: 'dist',
-  bundledWebRuntime: false,
+  android: {
+    allowMixedContent: true,
+  },
   plugins: {
     SplashScreen: {
       launchShowDuration: 2000,
