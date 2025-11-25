@@ -1,27 +1,18 @@
-# Contenido para Google Play Console - Evoluxe SEO
-
-## Assets Generados
-- **Icono (512x512):** `public/icon-playstore.png`
-- **Gráfico de funciones (1024x500):** `public/feature-graphic.png`
+# Google Play Console - Copia y Pega
 
 ---
 
-## Descripción Breve (máx 80 caracteres)
-```
+## DESCRIPCIÓN BREVE (copia esto)
+
 Analiza y mejora el SEO de tu web con 50+ métricas profesionales
-```
-(74 caracteres)
 
 ---
 
-## Descripción Completa (máx 4000 caracteres)
+## DESCRIPCIÓN COMPLETA (copia esto)
 
-```
 🚀 EVOLUXE SEO - Tu Herramienta Profesional de Análisis SEO
 
 ¿Quieres que tu sitio web aparezca en los primeros resultados de Google? Evoluxe SEO es la herramienta definitiva para analizar, optimizar y dominar el posicionamiento de tu página web.
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✨ CARACTERÍSTICAS PRINCIPALES
 
@@ -54,8 +45,6 @@ Analiza y mejora el SEO de tu web con 50+ métricas profesionales
 • Twitter Cards
 • Vista previa en redes sociales
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
 💎 PLANES DISPONIBLES
 
 🆓 PLAN GRATUITO
@@ -70,10 +59,7 @@ Analiza y mejora el SEO de tu web con 50+ métricas profesionales
 • Soporte prioritario
 • Historial de análisis
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
 🎯 PERFECTO PARA:
-
 • Propietarios de sitios web
 • Especialistas en Marketing Digital
 • Agencias SEO
@@ -81,75 +67,23 @@ Analiza y mejora el SEO de tu web con 50+ métricas profesionales
 • Emprendedores online
 • Desarrolladores web
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
 🔒 SEGURIDAD Y PRIVACIDAD
 Tu información está protegida. Cumplimos con todas las normativas de privacidad y protección de datos.
 
-📞 SOPORTE
-¿Tienes dudas? Nuestro equipo está disponible para ayudarte a sacar el máximo provecho de Evoluxe SEO.
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
 Descarga Evoluxe SEO ahora y lleva tu sitio web al siguiente nivel en los motores de búsqueda. ¡Domina el SEO como un profesional!
 
-#SEO #Marketing #Posicionamiento #WebAnalysis #GoogleRanking
-```
+---
+
+## DATOS RÁPIDOS
+
+Categoría: Herramientas
+Clasificación: PEGI 3 / Everyone
+Precio descarga: Gratis
+Suscripción: €9.99/mes
 
 ---
 
-## Categoría Recomendada
-**Categoría principal:** Herramientas  
-**Categoría secundaria:** Productividad / Negocios
+## ASSETS
 
----
-
-## Clasificación de Contenido
-- **Violencia:** Ninguna
-- **Sexualidad:** Ninguna  
-- **Lenguaje:** Ninguno
-- **Sustancias controladas:** Ninguna
-- **Contenido generado por usuarios:** No
-
-**Clasificación esperada:** PEGI 3 / Everyone
-
----
-
-## Política de Privacidad
-URL: `https://tu-dominio.com/politica-privacidad`
-(Ya tienes la página creada en la app)
-
----
-
-## Información de Contacto
-- **Email de desarrollador:** [tu-email@ejemplo.com]
-- **Sitio web:** [tu-sitio-web.com]
-
----
-
-## Precio Sugerido
-- **Descarga:** Gratis (con compras in-app)
-- **Suscripción mensual:** €9.99/mes (Plan Profesional)
-
----
-
-## Capturas de Pantalla Necesarias
-Necesitas mínimo 2 capturas de teléfono. Sugerencias:
-
-1. **Pantalla de inicio/Hero** - Mostrando la propuesta de valor
-2. **Dashboard de análisis** - Con métricas y puntuación SEO
-3. **Resultados de análisis** - Mostrando las métricas detalladas
-4. **Planes de precios** - Mostrando las opciones disponibles
-5. **Pantalla de proyecto** - Con detalles de un análisis
-
-**Tamaños requeridos:**
-- Teléfono: 1080x1920 px (mínimo 320px, máximo 3840px)
-- Tablet 7": 1080x1920 px
-- Tablet 10": 1920x1200 px
-
----
-
-## Notas Adicionales
-- Las capturas las puedes hacer desde el emulador de Android Studio
-- Usa la función de captura de pantalla del emulador (icono de cámara)
-- Puedes editarlas con herramientas como Canva para añadir marcos de dispositivo
+Icono 512x512: public/icon-playstore.png
+Gráfico 1024x500: public/feature-graphic.png
