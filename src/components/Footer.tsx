@@ -92,6 +92,11 @@ const Footer = () => {
                   Política de Cookies
                 </a>
               </li>
+              <li>
+                <a href="/eliminacion-cuenta" className="text-muted-foreground hover:text-primary transition-colors">
+                  Eliminación de Cuenta
+                </a>
+              </li>
             </ul>
           </div>
         </div>
