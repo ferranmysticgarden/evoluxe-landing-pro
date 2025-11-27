@@ -291,7 +291,42 @@ Dejar en blanco si no quieres dar teléfono
 
 ---
 
-## 🚀 PASO 11: SUBIR EL APK/AAB
+## 🔐 PASO 11: ACCESO PARA REVISORES
+
+**¿Necesitas proporcionar instrucciones?**
+✅ **SÍ** - Tu app requiere login y tiene funciones de pago
+
+### Selecciona:
+❌ "Todas las funciones están disponibles sin restricciones"
+✅ **"Todas o algunas funciones están restringidas"**
+
+### Instrucciones para los revisores:
+
+**Instrucción 1: Cuenta de prueba**
+```
+Usuario de prueba: test@evoluxeseo.com
+Contraseña: TestEvoluXe2024!
+```
+
+**Instrucción 2: Funciones premium**
+```
+Esta cuenta de prueba tiene acceso al Plan Profesional activo para que puedan revisar todas las funcionalidades premium sin necesidad de pagar.
+```
+
+**Instrucción 3: Cómo probar**
+```
+1. Inicia sesión con las credenciales proporcionadas
+2. Añade un proyecto con cualquier URL (ejemplo: https://google.com)
+3. El análisis SEO se generará automáticamente
+4. Todas las funciones premium están disponibles en esta cuenta
+```
+
+### Checkbox adicional:
+✅ **Marcar:** "Permitir que Android use las credenciales que proporcionas para hacer pruebas de rendimiento y compatibilidad"
+
+---
+
+## 🚀 PASO 12: SUBIR EL APK/AAB
 
 ### Archivo a subir
 📁 **Tu archivo .aab**
@@ -336,6 +371,8 @@ O
 - [ ] Política de privacidad URL añadida
 - [ ] Cuestionario de clasificación completado
 - [ ] Suscripciones configuradas en Google Play
+- [ ] **Cuenta de prueba creada para revisores**
+- [ ] **Instrucciones de acceso añadidas**
 - [ ] Email de contacto añadido
 - [ ] Archivo .aab subido
 - [ ] Información de contacto completa
@@ -345,6 +382,17 @@ O
 ## 🔴 MUY IMPORTANTE
 
 Google Play tardará **1-7 días** en revisar tu app antes de publicarla.
+
+**ANTES DE ENVIAR:**
+1. **Crear cuenta de prueba real en tu app:**
+   - Email: test@evoluxeseo.com
+   - Contraseña: TestEvoluXe2024!
+   - Activar Plan Profesional manualmente en Stripe para esta cuenta
+
+2. **Verificar que funciona:**
+   - Inicia sesión con la cuenta de prueba
+   - Prueba crear proyectos y análisis SEO
+   - Confirma que todas las funciones premium están disponibles
 
 **NO OLVIDES:**
 - Conectar las suscripciones de Google Play con Stripe en tu backend
