@@ -294,7 +294,7 @@ Dejar en blanco si no quieres dar teléfono
 ## 🔐 PASO 11: ACCESO PARA REVISORES
 
 **¿Necesitas proporcionar instrucciones?**
-✅ **SÍ** - Tu app requiere login y tiene funciones de pago
+✅ **SÍ** - Tu app requiere login
 
 ### Selecciona:
 ❌ "Todas las funciones están disponibles sin restricciones"
@@ -304,21 +304,21 @@ Dejar en blanco si no quieres dar teléfono
 
 **Instrucción 1: Cuenta de prueba**
 ```
-Usuario de prueba: test@evoluxeseo.com
-Contraseña: TestEvoluXe2024!
+Usuario de prueba: revisor@evoluxeseo.com
+Contraseña: GooglePlay2024!
 ```
 
-**Instrucción 2: Funciones premium**
+**Instrucción 2: Funcionalidades disponibles**
 ```
-Esta cuenta de prueba tiene acceso al Plan Profesional activo para que puedan revisar todas las funcionalidades premium sin necesidad de pagar.
+Esta cuenta de prueba permite acceder a las funciones básicas gratuitas de la aplicación. Las funciones premium (planes Starter, Profesional y Enterprise) requieren suscripción de pago, lo cual es normal en apps freemium.
 ```
 
-**Instrucción 3: Cómo probar**
+**Instrucción 3: Cómo probar la app**
 ```
 1. Inicia sesión con las credenciales proporcionadas
-2. Añade un proyecto con cualquier URL (ejemplo: https://google.com)
-3. El análisis SEO se generará automáticamente
-4. Todas las funciones premium están disponibles en esta cuenta
+2. Añade un proyecto con cualquier URL válida (ejemplo: https://google.com)
+3. El análisis SEO básico se generará automáticamente
+4. Pueden ver la pantalla de planes de precios para revisar las opciones premium
 ```
 
 ### Checkbox adicional:
@@ -384,20 +384,19 @@ O
 Google Play tardará **1-7 días** en revisar tu app antes de publicarla.
 
 **ANTES DE ENVIAR:**
-1. **Crear cuenta de prueba real en tu app:**
-   - Email: test@evoluxeseo.com
-   - Contraseña: TestEvoluXe2024!
-   - Activar Plan Profesional manualmente en Stripe para esta cuenta
+1. **Crear la cuenta de prueba:**
+   - Regístrate en tu app con: revisor@evoluxeseo.com
+   - Contraseña: GooglePlay2024!
+   - **Eso es todo** - no necesitas activar ningún plan de pago
 
 2. **Verificar que funciona:**
-   - Inicia sesión con la cuenta de prueba
-   - Prueba crear proyectos y análisis SEO
-   - Confirma que todas las funciones premium están disponibles
+   - Inicia sesión con esa cuenta
+   - Prueba crear un proyecto y ver el análisis SEO básico
+   - Confirma que se puede acceder a la pantalla de precios
 
-**NO OLVIDES:**
-- Conectar las suscripciones de Google Play con Stripe en tu backend
-- Probar las compras antes de lanzar
-- Configurar los webhooks de Google Play Billing
+**NO OLVIDES (para después de publicar):**
+- Configurar Google Play Billing para las suscripciones in-app
+- Probar las compras en modo sandbox antes del lanzamiento oficial
 
 ---
 
