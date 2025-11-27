@@ -296,30 +296,44 @@ Dejar en blanco si no quieres dar teléfono
 **¿Necesitas proporcionar instrucciones?**
 ✅ **SÍ** - Tu app requiere login
 
-### Selecciona:
+### Selecciona en Google Play:
 ❌ "Todas las funciones están disponibles sin restricciones"
 ✅ **"Todas o algunas funciones están restringidas"**
 
-### Instrucciones para los revisores:
+### COPIA Y PEGA ESTAS INSTRUCCIONES TAL CUAL:
 
-**Instrucción 1: Cuenta de prueba**
+---
+
+**📋 INSTRUCCIÓN 1 - Título:** Credenciales de acceso
+
+**Contenido:**
 ```
-Usuario de prueba: revisor@evoluxeseo.com
-Contraseña: GooglePlay2024!
+Email: revisor@evoluxeseo.com
+Contraseña: GooglePlay2025!
 ```
 
-**Instrucción 2: Funcionalidades disponibles**
+---
+
+**📋 INSTRUCCIÓN 2 - Título:** Funcionalidades disponibles
+
+**Contenido:**
 ```
-Esta cuenta de prueba permite acceder a las funciones básicas gratuitas de la aplicación. Las funciones premium (planes Starter, Profesional y Enterprise) requieren suscripción de pago, lo cual es normal en apps freemium.
+Esta cuenta permite acceder a las funciones básicas gratuitas de la app. Las funciones premium (planes Starter, Profesional y Enterprise de 29€, 79€ y 199€/mes) requieren suscripción de pago, lo cual es normal en aplicaciones freemium.
 ```
 
-**Instrucción 3: Cómo probar la app**
+---
+
+**📋 INSTRUCCIÓN 3 - Título:** Cómo probar la aplicación
+
+**Contenido:**
 ```
-1. Inicia sesión con las credenciales proporcionadas
-2. Añade un proyecto con cualquier URL válida (ejemplo: https://google.com)
+1. Iniciar sesión con las credenciales proporcionadas
+2. Añadir un proyecto nuevo con cualquier URL válida (por ejemplo: https://google.com)
 3. El análisis SEO básico se generará automáticamente
-4. Pueden ver la pantalla de planes de precios para revisar las opciones premium
+4. Pueden visualizar la pantalla de planes de precios para revisar las opciones premium disponibles
 ```
+
+---
 
 ### Checkbox adicional:
 ✅ **Marcar:** "Permitir que Android use las credenciales que proporcionas para hacer pruebas de rendimiento y compatibilidad"
@@ -386,7 +400,7 @@ Google Play tardará **1-7 días** en revisar tu app antes de publicarla.
 **ANTES DE ENVIAR:**
 1. **Crear la cuenta de prueba:**
    - Regístrate en tu app con: revisor@evoluxeseo.com
-   - Contraseña: GooglePlay2024!
+   - Contraseña: GooglePlay2025!
    - **Eso es todo** - no necesitas activar ningún plan de pago
 
 2. **Verificar que funciona:**
