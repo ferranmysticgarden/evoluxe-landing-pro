@@ -1,7 +1,7 @@
 import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'app.lovable.2b458dd0a7554119b873100189321f21',
+  appId: 'com.evoluxe.seoapp',
   appName: 'Evoluxe SEO',
   webDir: 'dist',
   android: {
