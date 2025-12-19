@@ -7,6 +7,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
+import { normalizeAndValidateUrl } from "@/lib/urlValidation";
 import { Plus, ExternalLink, Trash2, RefreshCw, BarChart3, Clock } from "lucide-react";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import Navbar from "@/components/Navbar";
@@ -75,7 +76,7 @@ const Dashboard = () => {
 
   const handleAddProject = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!canAddMore) {
       toast({
         title: "Límite alcanzado",
@@ -87,20 +88,14 @@ const Dashboard = () => {
 
     setIsAdding(true);
     try {
-      let url = newProjectUrl.trim();
-      if (!url.startsWith('http')) {
-        url = 'https://' + url;
-      }
-
-      // Validate URL
-      new URL(url);
+      const { normalizedUrl } = normalizeAndValidateUrl(newProjectUrl);
 
       const { error } = await supabase
         .from('projects')
         .insert({
           user_id: user!.id,
           name: newProjectName.trim(),
-          url: url
+          url: normalizedUrl,
         });
 
       if (error) throw error;
@@ -125,6 +120,7 @@ const Dashboard = () => {
       setIsAdding(false);
     }
   };
+
 
   const handleDeleteProject = async (projectId: string, projectName: string) => {
     if (!confirm(`¿Eliminar proyecto "${projectName}"?`)) return;
