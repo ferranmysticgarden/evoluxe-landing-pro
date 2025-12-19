@@ -35,7 +35,7 @@ const Hero = () => {
 
   const handleAnalyze = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!url) {
       toast({
         title: "URL requerida",
@@ -45,13 +45,13 @@ const Hero = () => {
       return;
     }
 
-    // Validate URL format
+    let normalizedUrl: string;
     try {
-      new URL(url.startsWith('http') ? url : `https://${url}`);
-    } catch {
+      normalizedUrl = normalizeAndValidateUrl(url).normalizedUrl;
+    } catch (err) {
       toast({
         title: "URL inválida",
-        description: "Por favor introduce una URL válida (ej: example.com)",
+        description: err instanceof Error ? err.message : "Por favor introduce una URL válida (ej: example.com)",
         variant: "destructive",
       });
       return;
@@ -62,7 +62,7 @@ const Hero = () => {
 
     try {
       const { data, error } = await supabase.functions.invoke('analyze-seo', {
-        body: { url: url.startsWith('http') ? url : `https://${url}` }
+        body: { url: normalizedUrl }
       });
 
       if (error) throw error;

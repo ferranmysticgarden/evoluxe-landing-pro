@@ -10,6 +10,64 @@ const logStep = (step: string, details?: any) => {
   console.log(`[ANALYZE-SEO] ${step}${detailsStr}`);
 };
 
+const MAX_URL_LENGTH = 2048;
+
+const isLikelyIpv4 = (host: string) => /^\d{1,3}(?:\.\d{1,3}){3}$/.test(host);
+
+const parseIpv4 = (host: string): number[] | null => {
+  if (!isLikelyIpv4(host)) return null;
+  const parts = host.split('.').map((p) => Number(p));
+  if (parts.some((n) => !Number.isInteger(n) || n < 0 || n > 255)) return null;
+  return parts;
+};
+
+const isPrivateIpv4 = (parts: number[]) => {
+  const [a, b] = parts;
+  if (a === 10) return true;
+  if (a === 127) return true;
+  if (a === 0) return true;
+  if (a === 169 && b === 254) return true;
+  if (a === 192 && b === 168) return true;
+  if (a === 172 && b >= 16 && b <= 31) return true;
+  return false;
+};
+
+const isBlockedHostname = (hostname: string) => {
+  const host = hostname.toLowerCase();
+  if (host === 'localhost') return true;
+  if (host.endsWith('.local')) return true;
+  if (host === '0.0.0.0') return true;
+  if (host === '::1') return true;
+  if (host.startsWith('fe80:')) return true;
+  if (host.startsWith('fc') || host.startsWith('fd')) return true;
+  return false;
+};
+
+const normalizeAndValidateUrlForFetch = (rawUrl: string) => {
+  if (!rawUrl) throw new Error('Invalid URL');
+  const trimmed = rawUrl.trim();
+  if (!trimmed) throw new Error('Invalid URL');
+  if (trimmed.length > MAX_URL_LENGTH) throw new Error('Invalid URL');
+
+  const withScheme = trimmed.startsWith('http://') || trimmed.startsWith('https://') ? trimmed : `https://${trimmed}`;
+
+  let parsed: URL;
+  try {
+    parsed = new URL(withScheme);
+  } catch {
+    throw new Error('Invalid URL');
+  }
+
+  if (!['http:', 'https:'].includes(parsed.protocol)) throw new Error('Invalid URL');
+  if (parsed.username || parsed.password) throw new Error('Invalid URL');
+  if (isBlockedHostname(parsed.hostname)) throw new Error('Invalid URL');
+
+  const ipv4 = parseIpv4(parsed.hostname);
+  if (ipv4 && isPrivateIpv4(ipv4)) throw new Error('Invalid URL');
+
+  return parsed.toString();
+};
+
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
@@ -17,11 +75,11 @@ serve(async (req) => {
 
   try {
     logStep("Function started");
-    
+
     const { url } = await req.json();
-    if (!url) throw new Error("URL is required");
-    
-    logStep("Analyzing URL", { url });
+    const safeUrl = normalizeAndValidateUrlForFetch(url);
+
+    logStep("Analyzing URL", { url: safeUrl });
 
     // Fetch webpage content
     let pageContent = "";
@@ -29,9 +87,9 @@ serve(async (req) => {
     let metaDescription = "";
     let headings: string[] = [];
     let imageCount = 0;
-    
+
     try {
-      const response = await fetch(url, {
+      const response = await fetch(safeUrl, {
         headers: {
           'User-Agent': 'Mozilla/5.0 (compatible; SEO-Analyzer/1.0)'
         }
@@ -40,7 +98,7 @@ serve(async (req) => {
       if (!response.ok) {
         throw new Error(`Failed to fetch URL: ${response.status}`);
       }
-      
+
       const html = await response.text();
       
       // Extract basic SEO elements

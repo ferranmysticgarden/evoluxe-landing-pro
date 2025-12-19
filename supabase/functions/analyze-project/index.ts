@@ -11,6 +11,60 @@ const logStep = (step: string, details?: any) => {
   console.log(`[ANALYZE-PROJECT] ${step}${detailsStr}`);
 };
 
+const MAX_URL_LENGTH = 2048;
+
+const isLikelyIpv4 = (host: string) => /^\d{1,3}(?:\.\d{1,3}){3}$/.test(host);
+
+const parseIpv4 = (host: string): number[] | null => {
+  if (!isLikelyIpv4(host)) return null;
+  const parts = host.split('.').map((p) => Number(p));
+  if (parts.some((n) => !Number.isInteger(n) || n < 0 || n > 255)) return null;
+  return parts;
+};
+
+const isPrivateIpv4 = (parts: number[]) => {
+  const [a, b] = parts;
+  if (a === 10) return true;
+  if (a === 127) return true;
+  if (a === 0) return true;
+  if (a === 169 && b === 254) return true;
+  if (a === 192 && b === 168) return true;
+  if (a === 172 && b >= 16 && b <= 31) return true;
+  return false;
+};
+
+const isBlockedHostname = (hostname: string) => {
+  const host = hostname.toLowerCase();
+  if (host === 'localhost') return true;
+  if (host.endsWith('.local')) return true;
+  if (host === '0.0.0.0') return true;
+  if (host === '::1') return true;
+  if (host.startsWith('fe80:')) return true;
+  if (host.startsWith('fc') || host.startsWith('fd')) return true;
+  return false;
+};
+
+const normalizeAndValidateUrlForFetch = (rawUrl: string) => {
+  if (!rawUrl) throw new Error('Invalid URL');
+  if (rawUrl.length > MAX_URL_LENGTH) throw new Error('Invalid URL');
+
+  let parsed: URL;
+  try {
+    parsed = new URL(rawUrl);
+  } catch {
+    throw new Error('Invalid URL');
+  }
+
+  if (!['http:', 'https:'].includes(parsed.protocol)) throw new Error('Invalid URL');
+  if (parsed.username || parsed.password) throw new Error('Invalid URL');
+  if (isBlockedHostname(parsed.hostname)) throw new Error('Invalid URL');
+
+  const ipv4 = parseIpv4(parsed.hostname);
+  if (ipv4 && isPrivateIpv4(ipv4)) throw new Error('Invalid URL');
+
+  return parsed.toString();
+};
+
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
@@ -18,14 +72,14 @@ serve(async (req) => {
 
   try {
     logStep("Function started");
-    
+
     const { projectId } = await req.json();
     if (!projectId) throw new Error("Project ID is required");
 
     // Authenticate user
     const authHeader = req.headers.get("Authorization");
     if (!authHeader) throw new Error("No authorization header");
-    
+
     const supabaseClient = createClient(
       Deno.env.get("SUPABASE_URL") ?? "",
       Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "",
@@ -35,7 +89,7 @@ serve(async (req) => {
     const token = authHeader.replace("Bearer ", "");
     const { data: userData, error: userError } = await supabaseClient.auth.getUser(token);
     if (userError || !userData.user) throw new Error("Unauthorized");
-    
+
     logStep("User authenticated", { userId: userData.user.id });
 
     // Get project
@@ -47,14 +101,16 @@ serve(async (req) => {
       .single();
 
     if (projectError || !project) throw new Error("Project not found");
-    
-    logStep("Project found", { url: project.url });
+
+    const safeUrl = normalizeAndValidateUrlForFetch(project.url);
+    logStep("Project found", { url: safeUrl });
 
     // Fetch webpage
     const startTime = Date.now();
-    const response = await fetch(project.url, {
+    const response = await fetch(safeUrl, {
       headers: { 'User-Agent': 'Mozilla/5.0 (compatible; SEO-Analyzer/1.0)' }
     });
+
     
     if (!response.ok) throw new Error(`Failed to fetch: ${response.status}`);
     
