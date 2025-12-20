@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Check } from "lucide-react";
+import { Check, Zap, Crown, Building2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
@@ -25,33 +25,42 @@ const TIERS = {
 const plans = [
   {
     name: "Starter",
-    price: "29",
-    description: "Para proyectos pequeños y startups",
+    price: "39",
+    originalPrice: "59",
+    description: "Perfecto para emprendedores y pequeños negocios",
+    icon: Zap,
     features: [
-      "Hasta 10 proyectos",
-      "50 métricas SEO",
-      "Monitoreo diario",
+      "Hasta 15 proyectos",
+      "50+ métricas SEO avanzadas",
+      "Monitoreo diario automático",
       "Análisis de competencia básico",
-      "Soporte por email"
+      "Alertas por email",
+      "Historial de 30 días",
+      "Soporte por email 24h"
     ],
-    cta: "Empezar Gratis",
+    cta: "Empezar Ahora",
     popular: false,
     priceId: TIERS.starter.price_id,
     productId: TIERS.starter.product_id,
   },
   {
     name: "Profesional",
-    price: "79",
-    description: "Ideal para agencias y profesionales",
+    price: "99",
+    originalPrice: "149",
+    description: "Ideal para agencias y consultores SEO",
+    icon: Crown,
     features: [
       "Proyectos ilimitados",
-      "Todas las métricas SEO",
+      "Todas las métricas SEO premium",
       "Monitoreo en tiempo real",
       "Análisis avanzado de competencia",
       "Auditoría técnica completa",
-      "API access",
+      "API REST completa",
+      "Reportes white-label PDF",
+      "Seguimiento de backlinks",
+      "Análisis de Core Web Vitals",
       "Soporte prioritario 24/7",
-      "Reportes white-label"
+      "Historial ilimitado"
     ],
     cta: "Probar 14 Días Gratis",
     popular: true,
@@ -60,17 +69,22 @@ const plans = [
   },
   {
     name: "Enterprise",
-    price: "199",
-    description: "Para grandes equipos y empresas",
+    price: "299",
+    originalPrice: "399",
+    description: "Para grandes equipos y corporaciones",
+    icon: Building2,
     features: [
       "Todo lo de Profesional",
-      "Gestión de equipos",
-      "SSO y seguridad avanzada",
+      "Usuarios ilimitados",
+      "SSO (SAML, OAuth)",
       "Onboarding personalizado",
       "Gerente de cuenta dedicado",
-      "SLA garantizado",
+      "SLA 99.9% garantizado",
       "Integraciones personalizadas",
-      "Auditorías trimestrales"
+      "Auditorías trimestrales en vivo",
+      "Formación para tu equipo",
+      "Acceso anticipado a nuevas funciones",
+      "Soporte telefónico directo"
     ],
     cta: "Contactar Ventas",
     popular: false,
@@ -85,7 +99,6 @@ const Pricing = () => {
   const navigate = useNavigate();
   const [loadingPlan, setLoadingPlan] = useState<string | null>(null);
 
-  // Scroll suave a la sección cuando se carga con hash
   React.useEffect(() => {
     if (window.location.hash === '#pricing') {
       setTimeout(() => {
@@ -167,23 +180,28 @@ const Pricing = () => {
     <section id="pricing" className="py-24 bg-muted/20">
       <div className="container mx-auto px-4">
         <div className="mx-auto max-w-3xl text-center mb-16">
+          <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-accent/10 px-4 py-2 text-sm font-medium text-accent">
+            🎉 Oferta de Lanzamiento - 30% OFF
+          </div>
           <h2 className="text-4xl font-bold mb-4 text-foreground md:text-5xl">
-            Planes Adaptados a tu Crecimiento
+            Planes que Escalan Contigo
           </h2>
           <p className="text-lg text-muted-foreground">
-            Elige el plan perfecto para tus necesidades SEO. Sin compromisos, cancela cuando quieras.
+            Elige el plan perfecto para tus necesidades. Sin compromisos, cancela cuando quieras.
+            <br />
+            <span className="font-semibold text-primary">Todos incluyen 14 días gratis.</span>
           </p>
           {user && !subscriptionData?.subscribed && (
             <div className="mt-6 p-4 bg-primary/10 rounded-lg border border-primary/20">
               <p className="text-sm font-medium text-primary">
-                ✨ ¡Tu cuenta está lista! Elige un plan para comenzar tu prueba gratis de 14 días
+                ✨ ¡Hola {user.email?.split('@')[0]}! Tu cuenta está lista. Elige tu plan para empezar.
               </p>
             </div>
           )}
           {subscriptionData?.subscribed && (
             <div className="mt-4">
               <Button variant="outline" onClick={handleManageSubscription}>
-                Gestionar Suscripción
+                ⚙️ Gestionar Suscripción
               </Button>
             </div>
           )}
@@ -192,34 +210,41 @@ const Pricing = () => {
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto">
           {plans.map((plan, index) => {
             const isActive = isCurrentPlan(plan.productId);
+            const IconComponent = plan.icon;
             return (
               <Card 
                 key={index}
-                className={`relative flex flex-col ${
-                  isActive ? 'border-accent border-2 shadow-xl' :
-                  plan.popular ? 'border-primary border-2 shadow-xl' : 'border-border'
+                className={`relative flex flex-col transition-all duration-300 hover:scale-105 ${
+                  isActive ? 'border-accent border-2 shadow-2xl shadow-accent/20' :
+                  plan.popular ? 'border-primary border-2 shadow-2xl shadow-primary/20' : 'border-border hover:border-primary/50'
                 }`}
               >
                 {isActive && (
                   <div className="absolute -top-4 left-1/2 -translate-x-1/2">
-                    <span className="bg-accent text-accent-foreground px-4 py-1 rounded-full text-sm font-semibold">
-                      Plan Actual
+                    <span className="bg-accent text-accent-foreground px-4 py-1 rounded-full text-sm font-semibold shadow-lg">
+                      ✓ Plan Actual
                     </span>
                   </div>
                 )}
                 {!isActive && plan.popular && (
                   <div className="absolute -top-4 left-1/2 -translate-x-1/2">
-                    <span className="bg-primary text-primary-foreground px-4 py-1 rounded-full text-sm font-semibold">
-                      Más Popular
+                    <span className="bg-primary text-primary-foreground px-4 py-1 rounded-full text-sm font-semibold shadow-lg animate-pulse">
+                      ⭐ Más Popular
                     </span>
                   </div>
                 )}
                 
-                <CardHeader>
+                <CardHeader className="text-center">
+                  <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-primary/10">
+                    <IconComponent className="h-7 w-7 text-primary" />
+                  </div>
                   <CardTitle className="text-2xl text-card-foreground">{plan.name}</CardTitle>
                   <CardDescription className="text-muted-foreground">{plan.description}</CardDescription>
                   <div className="mt-4">
-                    <span className="text-5xl font-bold text-foreground">{plan.price}€</span>
+                    <div className="flex items-center justify-center gap-2">
+                      <span className="text-lg text-muted-foreground line-through">{plan.originalPrice}€</span>
+                      <span className="text-5xl font-bold text-foreground">{plan.price}€</span>
+                    </div>
                     <span className="text-muted-foreground">/mes</span>
                   </div>
                 </CardHeader>
@@ -229,7 +254,7 @@ const Pricing = () => {
                     {plan.features.map((feature, featureIndex) => (
                       <li key={featureIndex} className="flex items-start gap-3">
                         <Check className="h-5 w-5 text-primary shrink-0 mt-0.5" />
-                        <span className="text-card-foreground">{feature}</span>
+                        <span className="text-card-foreground text-sm">{feature}</span>
                       </li>
                     ))}
                   </ul>
@@ -237,12 +262,13 @@ const Pricing = () => {
 
                 <CardFooter>
                   <Button 
-                    className="w-full"
+                    className={`w-full ${plan.popular && !isActive ? 'shadow-lg shadow-primary/30' : ''}`}
                     variant={isActive ? "secondary" : plan.popular ? "default" : "outline"}
+                    size="lg"
                     onClick={() => isActive ? null : handlePurchase(plan.name, plan.priceId)}
                     disabled={isActive || loadingPlan === plan.name || subscriptionLoading}
                   >
-                    {isActive ? "Plan Actual" : loadingPlan === plan.name ? "Cargando..." : plan.cta}
+                    {isActive ? "✓ Plan Actual" : loadingPlan === plan.name ? "Cargando..." : plan.cta}
                   </Button>
                 </CardFooter>
               </Card>
@@ -250,9 +276,25 @@ const Pricing = () => {
           })}
         </div>
 
-        <p className="text-center text-sm text-muted-foreground mt-8">
-          Todos los planes incluyen 14 días de prueba gratis. No se requiere tarjeta de crédito.
-        </p>
+        <div className="mt-12 text-center space-y-4">
+          <p className="text-sm text-muted-foreground">
+            🔒 Pago seguro con Stripe • 💳 Acepta todas las tarjetas • 🚫 Cancela cuando quieras
+          </p>
+          <div className="flex flex-wrap justify-center gap-6 text-sm text-muted-foreground">
+            <span className="flex items-center gap-2">
+              <Check className="h-4 w-4 text-primary" />
+              Sin compromiso
+            </span>
+            <span className="flex items-center gap-2">
+              <Check className="h-4 w-4 text-primary" />
+              Factura disponible
+            </span>
+            <span className="flex items-center gap-2">
+              <Check className="h-4 w-4 text-primary" />
+              Soporte en español
+            </span>
+          </div>
+        </div>
       </div>
     </section>
   );

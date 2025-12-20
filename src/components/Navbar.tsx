@@ -21,7 +21,7 @@ const Navbar = () => {
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2">
             <BarChart3 className="h-6 w-6 text-primary" />
-            <span className="text-xl font-bold text-foreground">Evoluxe's Project</span>
+            <span className="text-xl font-bold text-foreground">SEO Pro</span>
           </Link>
 
           {/* Desktop Navigation */}
