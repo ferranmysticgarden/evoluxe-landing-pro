@@ -9,13 +9,13 @@ const Footer = () => {
           <div>
             <a href="/" className="flex items-center gap-2 mb-4">
               <BarChart3 className="h-6 w-6 text-primary" />
-              <span className="text-xl font-bold text-foreground">Evoluxe's Project</span>
+              <span className="text-xl font-bold text-foreground">SEO Pro</span>
             </a>
             <p className="text-sm text-muted-foreground mb-4">
-              La herramienta SEO profesional más completa para dominar los rankings de búsqueda.
+              La herramienta SEO profesional más completa para dominar los rankings de Google.
             </p>
             <p className="text-sm text-muted-foreground">
-              © 2025 Evoluxe's Project. Todos los derechos reservados.
+              © 2025 SEO Pro. Todos los derechos reservados.
             </p>
           </div>
 

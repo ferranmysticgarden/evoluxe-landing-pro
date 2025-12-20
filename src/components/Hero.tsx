@@ -8,6 +8,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
+import { normalizeAndValidateUrl } from "@/lib/urlValidation";
 
 const Hero = () => {
   const navigate = useNavigate();
@@ -117,14 +118,14 @@ const Hero = () => {
           {/* Badge */}
           <div className="mb-6 inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2 text-sm font-medium text-primary">
             <Shield className="h-4 w-4" />
-            Herramienta SEO Profesional #1
+            🏆 Herramienta SEO #1 en España
           </div>
 
           {/* Heading */}
           <h1 className="mb-6 text-5xl font-bold tracking-tight text-foreground md:text-6xl lg:text-7xl">
-            Domina el SEO con{" "}
+            Domina Google con{" "}
             <span className="bg-gradient-to-r from-primary to-primary-glow bg-clip-text text-transparent">
-              50+ Métricas Avanzadas
+              SEO Pro Analytics
             </span>
           </h1>
 
