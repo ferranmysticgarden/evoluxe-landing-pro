@@ -10,7 +10,37 @@ const logStep = (step: string, details?: any) => {
   console.log(`[ANALYZE-SEO] ${step}${detailsStr}`);
 };
 
+// Sanitize error messages for client responses
+const getSafeErrorMessage = (error: unknown): string => {
+  const errorMessage = error instanceof Error ? error.message : String(error);
+  
+  // Log full error server-side for debugging
+  logStep("ERROR", { message: errorMessage });
+  
+  // Map to safe client messages
+  if (errorMessage.includes('Invalid URL')) {
+    return 'URL inválida. Por favor, introduce una URL válida';
+  }
+  if (errorMessage.includes('Rate limit') || errorMessage.includes('429')) {
+    return 'Demasiadas solicitudes. Por favor, espera un momento';
+  }
+  if (errorMessage.includes('credits') || errorMessage.includes('402')) {
+    return 'Servicio temporalmente no disponible';
+  }
+  if (errorMessage.includes('timeout') || errorMessage.includes('Timeout')) {
+    return 'La solicitud tardó demasiado. Inténtalo de nuevo';
+  }
+  if (errorMessage.includes('LOVABLE_API_KEY')) {
+    return 'Servicio de análisis no configurado';
+  }
+  
+  // Generic safe message
+  return 'Ha ocurrido un error durante el análisis. Por favor, inténtalo de nuevo';
+};
+
 const MAX_URL_LENGTH = 2048;
+const FETCH_TIMEOUT_MS = 30000; // 30 second timeout
+const AI_TIMEOUT_MS = 60000; // 60 second timeout for AI
 
 const isLikelyIpv4 = (host: string) => /^\d{1,3}(?:\.\d{1,3}){3}$/.test(host);
 
@@ -68,6 +98,22 @@ const normalizeAndValidateUrlForFetch = (rawUrl: string) => {
   return parsed.toString();
 };
 
+// Fetch with timeout
+const fetchWithTimeout = async (url: string, options: RequestInit, timeoutMs: number): Promise<Response> => {
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
+
+  try {
+    const response = await fetch(url, {
+      ...options,
+      signal: controller.signal,
+    });
+    return response;
+  } finally {
+    clearTimeout(timeoutId);
+  }
+};
+
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
@@ -81,7 +127,7 @@ serve(async (req) => {
 
     logStep("Analyzing URL", { url: safeUrl });
 
-    // Fetch webpage content
+    // Fetch webpage content with timeout
     let pageContent = "";
     let pageTitle = "";
     let metaDescription = "";
@@ -89,14 +135,14 @@ serve(async (req) => {
     let imageCount = 0;
 
     try {
-      const response = await fetch(safeUrl, {
-        headers: {
-          'User-Agent': 'Mozilla/5.0 (compatible; SEO-Analyzer/1.0)'
-        }
-      });
+      const response = await fetchWithTimeout(
+        safeUrl, 
+        { headers: { 'User-Agent': 'Mozilla/5.0 (compatible; SEO-Analyzer/1.0)' } },
+        FETCH_TIMEOUT_MS
+      );
       
       if (!response.ok) {
-        throw new Error(`Failed to fetch URL: ${response.status}`);
+        throw new Error(`Failed to fetch URL`);
       }
 
       const html = await response.text();
@@ -129,9 +175,8 @@ Imágenes con ALT: ${imagesWithAlt}
       });
       
     } catch (fetchError) {
-      const errorMsg = fetchError instanceof Error ? fetchError.message : String(fetchError);
-      logStep("Error fetching URL", { error: errorMsg });
-      pageContent = `No se pudo acceder a la URL: ${errorMsg}`;
+      logStep("Error fetching URL", { error: String(fetchError) });
+      pageContent = `No se pudo acceder a la URL`;
     }
 
     // Use Lovable AI to analyze SEO
@@ -140,18 +185,20 @@ Imágenes con ALT: ${imagesWithAlt}
 
     logStep("Calling Lovable AI for analysis");
 
-    const aiResponse = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        "Authorization": `Bearer ${LOVABLE_API_KEY}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        model: "google/gemini-2.5-flash",
-        messages: [
-          {
-            role: "system",
-            content: `Eres un experto en SEO. Analiza la información de una página web y proporciona:
+    const aiResponse = await fetchWithTimeout(
+      "https://ai.gateway.lovable.dev/v1/chat/completions",
+      {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${LOVABLE_API_KEY}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          model: "google/gemini-2.5-flash",
+          messages: [
+            {
+              role: "system",
+              content: `Eres un experto en SEO. Analiza la información de una página web y proporciona:
 1. Un porcentaje de optimización SEO (0-100)
 2. Una lista de 5-7 mejoras prioritarias y concretas
 
@@ -166,28 +213,30 @@ Responde SOLO con JSON en este formato exacto:
 }
 
 Sé crítico pero constructivo. El score debe reflejar problemas reales.`
-          },
-          {
-            role: "user",
-            content: `Analiza esta página web y dame el score y mejoras en formato JSON:
+            },
+            {
+              role: "user",
+              content: `Analiza esta página web y dame el score y mejoras en formato JSON:
 
 URL: ${url}
 ${pageContent}
 
 Recuerda: responde SOLO con el JSON, sin texto adicional.`
-          }
-        ],
-      }),
-    });
+            }
+          ],
+        }),
+      },
+      AI_TIMEOUT_MS
+    );
 
     if (!aiResponse.ok) {
       if (aiResponse.status === 429) {
-        throw new Error("Rate limit exceeded. Please try again later.");
+        throw new Error("Rate limit exceeded");
       }
       if (aiResponse.status === 402) {
-        throw new Error("AI credits depleted. Please add credits to continue.");
+        throw new Error("AI credits depleted");
       }
-      throw new Error(`AI gateway error: ${aiResponse.status}`);
+      throw new Error(`AI gateway error`);
     }
 
     const aiData = await aiResponse.json();
@@ -206,8 +255,7 @@ Recuerda: responde SOLO con el JSON, sin texto adicional.`
         throw new Error("No JSON found in AI response");
       }
     } catch (parseError) {
-      const errorMsg = parseError instanceof Error ? parseError.message : String(parseError);
-      logStep("Error parsing AI response", { error: errorMsg, content: aiContent });
+      logStep("Error parsing AI response", { error: String(parseError) });
       // Fallback analysis
       analysis = {
         score: 50,
@@ -235,11 +283,10 @@ Recuerda: responde SOLO con el JSON, sin texto adicional.`
     });
 
   } catch (error) {
-    const errorMessage = error instanceof Error ? error.message : String(error);
-    logStep("ERROR", { message: errorMessage });
+    const safeMessage = getSafeErrorMessage(error);
     return new Response(JSON.stringify({ 
       success: false,
-      error: errorMessage 
+      error: safeMessage 
     }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       status: 500,

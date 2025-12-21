@@ -1,5 +1,6 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.57.2";
+import Stripe from "https://esm.sh/stripe@18.5.0";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -11,7 +12,41 @@ const logStep = (step: string, details?: any) => {
   console.log(`[ANALYZE-PROJECT] ${step}${detailsStr}`);
 };
 
+// Sanitize error messages for client responses
+const getSafeErrorMessage = (error: unknown): string => {
+  const errorMessage = error instanceof Error ? error.message : String(error);
+  
+  // Log full error server-side for debugging
+  logStep("ERROR", { message: errorMessage });
+  
+  // Map to safe client messages
+  if (errorMessage.includes('not authenticated') || errorMessage.includes('Unauthorized')) {
+    return 'Se requiere autenticación';
+  }
+  if (errorMessage.includes('not found') || errorMessage.includes('Project not found')) {
+    return 'Proyecto no encontrado';
+  }
+  if (errorMessage.includes('Invalid URL')) {
+    return 'URL inválida';
+  }
+  if (errorMessage.includes('subscription') || errorMessage.includes('Subscription required')) {
+    return 'Se requiere una suscripción activa';
+  }
+  if (errorMessage.includes('Rate limit') || errorMessage.includes('Too many requests')) {
+    return 'Demasiadas solicitudes. Inténtalo de nuevo en unos minutos';
+  }
+  if (errorMessage.includes('timeout') || errorMessage.includes('Timeout')) {
+    return 'La solicitud tardó demasiado tiempo. Inténtalo de nuevo';
+  }
+  
+  // Generic safe message for unknown errors
+  return 'Ha ocurrido un error. Por favor, inténtalo de nuevo';
+};
+
 const MAX_URL_LENGTH = 2048;
+const FETCH_TIMEOUT_MS = 30000; // 30 second timeout
+const RATE_LIMIT_WINDOW_MS = 300000; // 5 minutes
+const MAX_ANALYSES_PER_WINDOW = 10;
 
 const isLikelyIpv4 = (host: string) => /^\d{1,3}(?:\.\d{1,3}){3}$/.test(host);
 
@@ -65,6 +100,107 @@ const normalizeAndValidateUrlForFetch = (rawUrl: string) => {
   return parsed.toString();
 };
 
+// Check subscription status server-side
+const checkUserSubscription = async (userEmail: string): Promise<boolean> => {
+  const stripeKey = Deno.env.get("STRIPE_SECRET_KEY");
+  if (!stripeKey) {
+    logStep("STRIPE_SECRET_KEY not set, allowing access");
+    return true; // Allow if Stripe not configured
+  }
+
+  try {
+    const stripe = new Stripe(stripeKey, { apiVersion: "2025-08-27.basil" });
+    const customers = await stripe.customers.list({ email: userEmail, limit: 1 });
+    
+    if (customers.data.length === 0) {
+      return false;
+    }
+
+    const customerId = customers.data[0].id;
+    const subscriptions = await stripe.subscriptions.list({
+      customer: customerId,
+      status: "active",
+      limit: 1,
+    });
+
+    return subscriptions.data.length > 0;
+  } catch (error) {
+    logStep("Error checking subscription", { error: String(error) });
+    return false;
+  }
+};
+
+// Simple rate limiting using project's last_analyzed_at
+const checkRateLimit = async (
+  supabaseClient: any, 
+  userId: string, 
+  projectId: string
+): Promise<{ allowed: boolean; reason?: string }> => {
+  try {
+    // Check if project was analyzed too recently
+    const { data: project, error } = await supabaseClient
+      .from('projects')
+      .select('last_analyzed_at')
+      .eq('id', projectId)
+      .eq('user_id', userId)
+      .single();
+
+    if (error || !project) {
+      return { allowed: false, reason: 'Project not found' };
+    }
+
+    if (project.last_analyzed_at) {
+      const lastAnalyzed = new Date(project.last_analyzed_at).getTime();
+      const now = Date.now();
+      const timeSinceLastAnalysis = now - lastAnalyzed;
+      
+      // Minimum 1 minute between analyses for same project
+      if (timeSinceLastAnalysis < 60000) {
+        return { 
+          allowed: false, 
+          reason: 'Rate limit: Please wait at least 1 minute between analyses' 
+        };
+      }
+    }
+
+    // Check total analyses count in window
+    const windowStart = new Date(Date.now() - RATE_LIMIT_WINDOW_MS).toISOString();
+    const { count, error: countError } = await supabaseClient
+      .from('seo_analyses')
+      .select('*', { count: 'exact', head: true })
+      .eq('project_id', projectId)
+      .gte('analyzed_at', windowStart);
+
+    if (!countError && count !== null && count >= MAX_ANALYSES_PER_WINDOW) {
+      return { 
+        allowed: false, 
+        reason: 'Too many requests. Please try again later' 
+      };
+    }
+
+    return { allowed: true };
+  } catch (error) {
+    logStep("Rate limit check error", { error: String(error) });
+    return { allowed: true }; // Allow on error to not block users
+  }
+};
+
+// Fetch with timeout
+const fetchWithTimeout = async (url: string, options: RequestInit, timeoutMs: number): Promise<Response> => {
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
+
+  try {
+    const response = await fetch(url, {
+      ...options,
+      signal: controller.signal,
+    });
+    return response;
+  } finally {
+    clearTimeout(timeoutId);
+  }
+};
+
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
@@ -92,6 +228,20 @@ serve(async (req) => {
 
     logStep("User authenticated", { userId: userData.user.id });
 
+    // Check subscription server-side
+    const hasSubscription = await checkUserSubscription(userData.user.email || '');
+    if (!hasSubscription) {
+      throw new Error("Subscription required");
+    }
+    logStep("Subscription verified");
+
+    // Check rate limit
+    const rateLimit = await checkRateLimit(supabaseClient, userData.user.id, projectId);
+    if (!rateLimit.allowed) {
+      throw new Error(rateLimit.reason || "Rate limit exceeded");
+    }
+    logStep("Rate limit check passed");
+
     // Get project
     const { data: project, error: projectError } = await supabaseClient
       .from('projects')
@@ -105,14 +255,15 @@ serve(async (req) => {
     const safeUrl = normalizeAndValidateUrlForFetch(project.url);
     logStep("Project found", { url: safeUrl });
 
-    // Fetch webpage
+    // Fetch webpage with timeout
     const startTime = Date.now();
-    const response = await fetch(safeUrl, {
-      headers: { 'User-Agent': 'Mozilla/5.0 (compatible; SEO-Analyzer/1.0)' }
-    });
+    const response = await fetchWithTimeout(
+      safeUrl, 
+      { headers: { 'User-Agent': 'Mozilla/5.0 (compatible; SEO-Analyzer/1.0)' } },
+      FETCH_TIMEOUT_MS
+    );
 
-    
-    if (!response.ok) throw new Error(`Failed to fetch: ${response.status}`);
+    if (!response.ok) throw new Error(`Failed to fetch page`);
     
     const html = await response.text();
     const loadTime = Date.now() - startTime;
@@ -284,11 +435,10 @@ serve(async (req) => {
     });
 
   } catch (error) {
-    const errorMessage = error instanceof Error ? error.message : String(error);
-    logStep("ERROR", { message: errorMessage });
+    const safeMessage = getSafeErrorMessage(error);
     return new Response(JSON.stringify({ 
       success: false,
-      error: errorMessage 
+      error: safeMessage 
     }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       status: 500,
