@@ -1,26 +1,42 @@
 {
-  "name": "SEO Pro - Herramienta SEO Profesional",
-  "short_name": "SEO Pro",
-  "description": "Domina Google con 50+ métricas avanzadas, análisis de competencia y auditorías técnicas completas",
+  "name": "Evoluxe SEO - Herramienta SEO Profesional",
+  "short_name": "Evoluxe SEO",
+  "description": "Domina el SEO con 50+ métricas avanzadas, análisis de competencia y auditorías técnicas completas",
   "start_url": "/",
+  "id": "/",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#8B5CF6",
   "orientation": "portrait-primary",
+  "scope": "/",
+  "prefer_related_applications": false,
   "icons": [
     {
       "src": "/icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
     },
     {
       "src": "/icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
     }
   ],
-  "categories": ["business", "productivity"],
-  "lang": "es-ES"
+  "categories": ["business", "productivity", "utilities"],
+  "lang": "es-ES",
+  "dir": "ltr"
 }
